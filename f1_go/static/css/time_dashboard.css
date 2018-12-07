@@ -1,10 +1,10 @@
-html, body{
+html, body {
   font-family: arial;
   background-color: #112D32;
   color: #DDDDDD;
 }
 
-body{
+body {
   margin-top: 0px;
   margin-right: 0px;
   margin-left: 0px;
@@ -46,7 +46,7 @@ body{
   /* display: inline-block; */
 }
 
-.header_svg_container{
+.header_svg_container {
   height: 50%;
   display: inline-block;
   vertical-align: middle;
@@ -83,12 +83,6 @@ body{
   background-color: #254E58;
 }
 
-
-
-
-
-
-
 #time_chart {
   background-color: #254E58;
   width: -webkit-fill-available;
@@ -120,56 +114,39 @@ body{
 
 #chart_legend_fastest_lap {
   border-radius: 6px;
-  background-color: rgb(0,116,2175,0.5);
+  background-color: rgb(0, 116, 2175, 0.5);
 }
 
 #chart_legend_slowest_lap {
   border-radius: 6px;
-  background-color: rgb(255,0,0,0.5);
+  background-color: rgb(255, 0, 0, 0.5);
 }
 
 #chart_legend_car_pitted {
   border-radius: 6px;
   color: white;
-  background-color: rgb(255,255,0,0.5);
+  background-color: rgb(255, 255, 0, 0.5);
 }
 
-
 .fastest_lap {
-  background-color: rgb(0,116,2175,0.1);
+  background-color: rgb(0, 116, 2175, 0.1);
 }
 
 .slowest_lap {
-  background-color: rgb(255,0,0,0.1);
+  background-color: rgb(255, 0, 0, 0.1);
 }
 
 .car_pitted {
-  background-color: rgb(255,255,0,0.1);
+  background-color: rgb(255, 255, 0, 0.1);
 }
 
 .fastest_lap.car_pitted {
-  background: repeating-linear-gradient(
-  135deg,
-  rgb(0,116,2175,0.1),
-  rgb(0,116,2175,0.1) 10px,
-  rgb(255,255,0,0.1) 10px,
-  rgb(255,255,0,0.1) 20px
-  );
+  background: repeating-linear-gradient( 135deg, rgb(0, 116, 2175, 0.1), rgb(0, 116, 2175, 0.1) 10px, rgb(255, 255, 0, 0.1) 10px, rgb(255, 255, 0, 0.1) 20px);
 }
 
 .slowest_lap.car_pitted {
-  background: repeating-linear-gradient(
-  135deg,
-  rgb(255,0,0,0.1),
-  rgb(255,0,0,0.1) 10px,
-  rgb(255,255,0,0.1) 10px,
-  rgb(255,255,0,0.1) 20px
-  );
+  background: repeating-linear-gradient( 135deg, rgb(255, 0, 0, 0.1), rgb(255, 0, 0, 0.1) 10px, rgb(255, 255, 0, 0.1) 10px, rgb(255, 255, 0, 0.1) 20px);
 }
-
-
-
-
 
 #time_chart_grid {
   padding-top: 2em;
@@ -186,7 +163,7 @@ body{
   border-top: 1px solid #DDDDDD;
 }
 
-.time_grid_entry{
+.time_grid_entry {
   height: 3em;
 }
 

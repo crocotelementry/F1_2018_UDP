@@ -1,10 +1,10 @@
-html, body{
+html, body {
   font-family: arial;
   background-color: #112D32;
   color: #DDDDDD;
 }
 
-body{
+body {
   margin-top: 0px;
   margin-right: 0px;
   margin-left: 0px;
@@ -46,7 +46,7 @@ body{
   /* display: inline-block; */
 }
 
-.header_svg_container{
+.header_svg_container {
   height: 50%;
   display: inline-block;
   vertical-align: middle;
@@ -70,7 +70,6 @@ body{
   line-height: 2em;
 }
 
-
 .element_container {
   margin-right: 2em;
   margin-left: 2em;
@@ -89,7 +88,7 @@ body{
   grid: 120px 120px / calc(100% / 4) calc(100% / 4) calc(100% / 4) calc(100% / 4);
 }
 
-.telemetry_grid_element{
+.telemetry_grid_element {
   border-radius: 6px;
   background-color: #254E58;
 }
@@ -98,14 +97,17 @@ body{
   margin-right: 0.5em;
   margin-bottom: 0.25em;
 }
+
 #first_row_second_position {
   margin-right: 0.5em;
   margin-bottom: 0.25em;
 }
+
 #first_row_third_position {
   margin-right: 0.5em;
   margin-bottom: 0.25em;
 }
+
 #first_row_fourth_position {
   margin-bottom: 0.25em;
 }
@@ -114,14 +116,17 @@ body{
   margin-right: 0.5em;
   margin-top: 0.25em;
 }
+
 #second_row_second_position {
   margin-right: 0.5em;
   margin-top: 0.25em;
 }
+
 #second_row_third_position {
   margin-right: 0.5em;
   margin-top: 0.25em;
 }
+
 #second_row_fourth_position {
   margin-top: 0.25em;
 }
@@ -171,8 +176,6 @@ body{
   /* background-color: transparent; */
 }
 
-
-
 #speed_chart {
   height: 100%;
 }
@@ -192,7 +195,6 @@ body{
 /* #speed_graph_container > div > div:nth-child(1) > div > svg > rect {
   fill-opacity: 0.0;
 } */
-
 
 #engine_rpm_graph {
   margin-top: 0.5em;
@@ -250,8 +252,6 @@ body{
   height: 100%;
 }
 
-
-
 #throttle_brake_graph {
   margin-top: 0.5em;
   height: 19em;
@@ -269,8 +269,6 @@ body{
   width: -webkit-fill-available;
   /* background-color: transparent; */
 }
-
-
 
 #throttle_brake_chart {
   height: 100%;

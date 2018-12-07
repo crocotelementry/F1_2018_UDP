@@ -21,7 +21,7 @@ var current_fia_flags_element = document.getElementById('current_fia_flags');
 var pit_info = ['None', 'Pitting', 'In Pit Area'];
 
 // create an array with the gear data strings
-var gear_info = ['N','1','2','3','4','5','6','7','8'];
+var gear_info = ['N', '1', '2', '3', '4', '5', '6', '7', '8'];
 gear_info[-1] = 'R';
 
 // create an array with the drs data strings
@@ -118,7 +118,7 @@ speed_ctx.strokeStyle = "#8D8741";
 rpm_ctx.strokeStyle = "#FF4136";
 gear_ctx.strokeStyle = "#7FDBFF";
 // throttle_brake uses two color lines, need function to draw and array to hold colors
-throttle_brake_line_colors = ['#01FF70','#FF851B'];
+throttle_brake_line_colors = ['#01FF70', '#FF851B'];
 
 // Multiplier to convert speed in relation to canvas height where 0 is bottom and 350 km/h is the top
 var speed_multiplier = speed_canvas_height / 350;
@@ -135,11 +135,11 @@ var ws = new WebSocket('ws://localhost:8080/ws');
 function chart_shift(chart_data) {
   // If our chart is full with data, delete the furthest left
   if (chart_data.length > chart_points_number) {
-    chart_data.splice(0,1);
+    chart_data.splice(0, 1);
   };
 
   // shift the chart data
-  for (x=0; x < chart_data.length; x++){
+  for (x = 0; x < chart_data.length; x++) {
     chart_data[x][0] = chart_data[x][0] - chart_shift_variable;
 
   };
@@ -163,7 +163,7 @@ function draw_chart(chart_data, chart_ctx, chart_canvas) {
   chart_ctx.beginPath();
 
 
-  for (x=0; x<chart_data.length; x++){
+  for (x = 0; x < chart_data.length; x++) {
     chart_ctx.moveTo(previous_points[0], previous_points[1]);
     chart_ctx.lineTo(chart_data[x][0], chart_data[x][1]);
     previous_points = chart_data[x];
@@ -179,16 +179,16 @@ function draw_throttle_brake_chart(throttle_data, brake_data, chart_ctx, chart_c
   chart_shift(brake_data);
   clear_chart(chart_ctx, chart_canvas);
 
-  var data_array = [throttle_data,brake_data];
+  var data_array = [throttle_data, brake_data];
 
-  for(y=0; y<2; y++){
+  for (y = 0; y < 2; y++) {
 
     var previous_points = data_array[y][0];
     chart_ctx.moveTo(previous_points[0], previous_points[1]);
     chart_ctx.strokeStyle = throttle_brake_line_colors[y];
     chart_ctx.beginPath();
 
-    for (x=0; x<data_array[y].length; x++){
+    for (x = 0; x < data_array[y].length; x++) {
       chart_ctx.moveTo(previous_points[0], previous_points[1]);
       chart_ctx.lineTo(data_array[y][x][0], data_array[y][x][1]);
       previous_points = data_array[y][x];
@@ -201,32 +201,32 @@ function draw_throttle_brake_chart(throttle_data, brake_data, chart_ctx, chart_c
 
 // Function to convert the time we are given in the UDP packets in seconds to a standard time format
 function intTime_to_timeTime(time_str) {
-  let step_one   = time_str / 60;
-  let time_min   = Math.floor(step_one);
+  let step_one = time_str / 60;
+  let time_min = Math.floor(step_one);
 
-  let step_two   = (step_one - time_min) * 60;
-  let time_sec   = Math.floor(step_two);
+  let step_two = (step_one - time_min) * 60;
+  let time_sec = Math.floor(step_two);
 
   let step_three = (step_two - time_sec) * 60;
-  let time_mil   = Math.floor(step_three);
+  let time_mil = Math.floor(step_three);
 
 
 
-  if (time_min < 10){
+  if (time_min < 10) {
     time_min = "0" + time_min.toString();
-  } else{
+  } else {
     time_min = time_min.toString();
   }
 
-  if (time_sec < 10){
+  if (time_sec < 10) {
     time_sec = "0" + time_sec.toString();
-  } else{
+  } else {
     time_sec = time_sec.toString();
   }
 
-  if (time_mil < 10){
+  if (time_mil < 10) {
     time_mil = "0" + time_mil.toString();
-  } else{
+  } else {
     time_mil = time_mil.toString();
   }
 
@@ -234,8 +234,8 @@ function intTime_to_timeTime(time_str) {
 }
 
 // Function is called when go_websocket_server recieves a packet and sends it via the websocket
-ws.onmessage = function(event){
-  var data =  JSON.parse(event.data);
+ws.onmessage = function(event) {
+  var data = JSON.parse(event.data);
 
 
   switch (data.M_header.M_packetId) {
@@ -246,7 +246,7 @@ ws.onmessage = function(event){
       }
       break;
 
-    // If the data inbound is the lap data packet
+      // If the data inbound is the lap data packet
     case 2:
       // set current lap number data
       if (amount_of_laps != 0) {
@@ -254,15 +254,15 @@ ws.onmessage = function(event){
       }
       // Set the data for the rest lap packet informations
       race_position_element.innerHTML = data.M_lapData[data.M_header.M_playerCarIndex].M_carPosition;
-      last_lap_time_element.innerHTML = intTime_to_timeTime(data.M_lapData[data.M_header.M_playerCarIndex].M_lastLapTime);                        // convert to time format?
-      pit_status_element.innerHTML = pit_info[data.M_lapData[data.M_header.M_playerCarIndex].M_pitStatus];                                        // 0 = none, 1 = pitting, 2 = in pit area
-      current_sector_element.innerHTML = data.M_lapData[data.M_header.M_playerCarIndex].M_sector;                     // 0 = sector1, 1 = sector2, 2 = sector3
+      last_lap_time_element.innerHTML = intTime_to_timeTime(data.M_lapData[data.M_header.M_playerCarIndex].M_lastLapTime); // convert to time format?
+      pit_status_element.innerHTML = pit_info[data.M_lapData[data.M_header.M_playerCarIndex].M_pitStatus]; // 0 = none, 1 = pitting, 2 = in pit area
+      current_sector_element.innerHTML = data.M_lapData[data.M_header.M_playerCarIndex].M_sector; // 0 = sector1, 1 = sector2, 2 = sector3
       break;
 
-    // If the data inbound is the car telemetry packet
+      // If the data inbound is the car telemetry packet
     case 6:
       // Set the data for the telemetry packet information
-      drs_status_element.innerHTML = drs_info[data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_drs];                                     // 0 = off, 1 = on
+      drs_status_element.innerHTML = drs_info[data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_drs]; // 0 = off, 1 = on
       current_gear_element.innerHTML = gear_info[data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_gear];
       speed_chart_data.push([speed_canvas_width, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_speed * speed_multiplier]);
       rpm_chart_data.push([rpm_canvas_width, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_engineRPM * rpm_multiplier]);
@@ -277,10 +277,10 @@ ws.onmessage = function(event){
       draw_throttle_brake_chart(throttle_brake_chart_throttle_data, throttle_brake_chart_brake_data, throttle_brake_ctx, throttle_brake_canvas);
       break;
 
-    // If the data inbound is the car status packet
+      // If the data inbound is the car status packet
     case 7:
       // Set the data for the status packet information
-      current_fia_flags_element.innerHTML = fia_info[data.M_carStatusData[data.M_header.M_playerCarIndex].M_vehicleFiaFlags];                     // -1 = invalid/unknown, 0 = none, 1 = green, 2 = blue, 3 = yellow, 4 = red
+      current_fia_flags_element.innerHTML = fia_info[data.M_carStatusData[data.M_header.M_playerCarIndex].M_vehicleFiaFlags]; // -1 = invalid/unknown, 0 = none, 1 = green, 2 = blue, 3 = yellow, 4 = red
       break;
   }
 }
