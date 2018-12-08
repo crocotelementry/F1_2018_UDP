@@ -86,6 +86,14 @@ var gear_chart_data = [];
 var throttle_brake_chart_throttle_data = [];
 var throttle_brake_chart_brake_data = [];
 
+
+// create an array that will hold our speed chart data, with the first data point being "0,0" equivilent
+var speed_chart_data_queue = [];
+var rpm_chart_data_queue = [];
+var gear_chart_data_queue = [];
+var throttle_brake_chart_throttle_data_queue = [];
+var throttle_brake_chart_brake_data_queue = [];
+
 // Set a variable that will be how many points can be contained in the chart.
 // For now, set this to the width of the chart so each input from our websocket will be a pixel apart
 // Adjust as required
@@ -126,21 +134,23 @@ var rpm_multiplier = rpm_canvas_height / 12500;
 var gear_multiplier = gear_canvas_height / 8;
 var throttle_brake_multiplier = throttle_brake_canvas_height / 100;
 
+// Create a variable to controll our interval. If all new data is processed then dont run the charts
+var not_read_position_adder = 0;
 
 // connect to websocket
 var ws = new WebSocket('ws://localhost:8080/ws');
 
 
 // Function that shifts the chart
-function chart_shift(chart_data) {
+function chart_shift(chart_data, new_graph_points) {
   // If our chart is full with data, delete the furthest left
   if (chart_data.length > chart_points_number) {
-    chart_data.splice(0, 1);
+    chart_data.splice(0, new_graph_points);
   };
 
   // shift the chart data
   for (x = 0; x < chart_data.length; x++) {
-    chart_data[x][0] = chart_data[x][0] - chart_shift_variable;
+    chart_data[x][0] = chart_data[x][0] - (new_graph_points);
 
   };
 };
@@ -151,9 +161,9 @@ function clear_chart(chart_ctx, chart_canvas) {
 }
 
 // Function to draw the chart
-function draw_chart(chart_data, chart_ctx, chart_canvas) {
+function draw_chart(chart_data, chart_ctx, chart_canvas, new_graph_points) {
   // First we need to clear the chart
-  chart_shift(chart_data);
+  chart_shift(chart_data, new_graph_points);
   clear_chart(chart_ctx, chart_canvas);
 
   var previous_points = chart_data[0];
@@ -173,10 +183,10 @@ function draw_chart(chart_data, chart_ctx, chart_canvas) {
 }
 
 // Function to draw throttle_brake chart
-function draw_throttle_brake_chart(throttle_data, brake_data, chart_ctx, chart_canvas) {
+function draw_throttle_brake_chart(throttle_data, brake_data, chart_ctx, chart_canvas, new_graph_points) {
   // First we need to clear the chart
-  chart_shift(throttle_data);
-  chart_shift(brake_data);
+  chart_shift(throttle_data, new_graph_points);
+  chart_shift(brake_data, new_graph_points);
   clear_chart(chart_ctx, chart_canvas);
 
   var data_array = [throttle_data, brake_data];
@@ -197,6 +207,19 @@ function draw_throttle_brake_chart(throttle_data, brake_data, chart_ctx, chart_c
     chart_ctx.stroke();
 
   };
+}
+
+var drawing_interval_efficiency = setInterval(draw_graphs, 18);
+
+function draw_graphs() {
+  if (not_read_position_adder > 0) {
+    let num_of_new_packets = not_read_position_adder;
+    not_read_position_adder = 0;
+    draw_chart(speed_chart_data, speed_ctx, speed_canvas, num_of_new_packets);
+    draw_chart(rpm_chart_data, rpm_ctx, rpm_canvas, num_of_new_packets);
+    draw_chart(gear_chart_data, gear_ctx, gear_canvas, num_of_new_packets);
+    draw_throttle_brake_chart(throttle_brake_chart_throttle_data, throttle_brake_chart_brake_data, throttle_brake_ctx, throttle_brake_canvas, num_of_new_packets);
+  }
 }
 
 // Function to convert the time we are given in the UDP packets in seconds to a standard time format
@@ -264,17 +287,16 @@ ws.onmessage = function(event) {
       // Set the data for the telemetry packet information
       drs_status_element.innerHTML = drs_info[data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_drs]; // 0 = off, 1 = on
       current_gear_element.innerHTML = gear_info[data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_gear];
-      speed_chart_data.push([speed_canvas_width, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_speed * speed_multiplier]);
-      rpm_chart_data.push([rpm_canvas_width, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_engineRPM * rpm_multiplier]);
-      gear_chart_data.push([gear_canvas_width, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_gear * gear_multiplier]);
 
-      throttle_brake_chart_throttle_data.push([throttle_brake_canvas_width, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_throttle * throttle_brake_multiplier]);
-      throttle_brake_chart_brake_data.push([throttle_brake_canvas_width, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_brake * throttle_brake_multiplier]);
+      speed_chart_data.push([speed_canvas_width + not_read_position_adder, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_speed * speed_multiplier]);
+      rpm_chart_data.push([rpm_canvas_width + not_read_position_adder, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_engineRPM * rpm_multiplier]);
+      gear_chart_data.push([gear_canvas_width + not_read_position_adder, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_gear * gear_multiplier]);
 
-      draw_chart(speed_chart_data, speed_ctx, speed_canvas);
-      draw_chart(rpm_chart_data, rpm_ctx, rpm_canvas);
-      draw_chart(gear_chart_data, gear_ctx, gear_canvas);
-      draw_throttle_brake_chart(throttle_brake_chart_throttle_data, throttle_brake_chart_brake_data, throttle_brake_ctx, throttle_brake_canvas);
+      throttle_brake_chart_throttle_data.push([throttle_brake_canvas_width + not_read_position_adder, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_throttle * throttle_brake_multiplier]);
+      throttle_brake_chart_brake_data.push([throttle_brake_canvas_width + not_read_position_adder, data.M_carTelemetryData[data.M_header.M_playerCarIndex].M_brake * throttle_brake_multiplier]);
+      //
+      not_read_position_adder += 1;
+
       break;
 
       // If the data inbound is the car status packet
