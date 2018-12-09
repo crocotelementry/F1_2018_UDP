@@ -279,7 +279,7 @@ ws.onmessage = function(event) {
       race_position_element.innerHTML = data.M_lapData[data.M_header.M_playerCarIndex].M_carPosition;
       last_lap_time_element.innerHTML = intTime_to_timeTime(data.M_lapData[data.M_header.M_playerCarIndex].M_lastLapTime); // convert to time format?
       pit_status_element.innerHTML = pit_info[data.M_lapData[data.M_header.M_playerCarIndex].M_pitStatus]; // 0 = none, 1 = pitting, 2 = in pit area
-      current_sector_element.innerHTML = data.M_lapData[data.M_header.M_playerCarIndex].M_sector; // 0 = sector1, 1 = sector2, 2 = sector3
+      current_sector_element.innerHTML = data.M_lapData[data.M_header.M_playerCarIndex].M_sector + 1; // 0 = sector1, 1 = sector2, 2 = sector3
       break;
 
       // If the data inbound is the car telemetry packet
