@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>F1 2018 UDP</title>
-  <link rel="stylesheet" href="/static/css/live_dashboard.css">
+  <link rel="stylesheet" href="/static/css/history_dashboard.css">
 </head>
 
 <body>
@@ -92,162 +92,15 @@
     <div class="" id="page_title">
       <div id="page_title_left">
         <div id="page_title_text_span_container">
-          <span id="page_title_text">Live Telemetry</span>
+          <span id="page_title_text">History</span>
         </div>
       </div>
       <div id="page_title_right"></div>
-    </div>
-    <div class="" id="live_telemetry_grid">
-      <div class="telemetry_grid_element" id="first_row_first_position">
-        <div class="telemetry_grid_element_data_container">
-          <div class="telemetry_data_title">
-            <span class="telemetry_data_title_text">Lap</span>
-          </div>
-          <div class="telemetry_data_data">
-            <span class="telemetry_data_data_text" id="lap_number">0 of 0</span>
-          </div>
-        </div>
-      </div>
-      <div class="telemetry_grid_element" id="first_row_second_position">
-        <div class="telemetry_grid_element_data_container">
-          <div class="telemetry_data_title">
-            <span class="telemetry_data_title_text">Position</span>
-          </div>
-          <div class="telemetry_data_data">
-            <span class="telemetry_data_data_text" id="race_position">N/A</span>
-          </div>
-        </div>
-      </div>
-      <div class="telemetry_grid_element" id="first_row_third_position">
-        <div class="telemetry_grid_element_data_container">
-          <div class="telemetry_data_title">
-            <span class="telemetry_data_title_text">Last Lap</span>
-          </div>
-          <div class="telemetry_data_data">
-            <span class="telemetry_data_data_text" id="last_lap_time">00:00:00</span>
-          </div>
-        </div>
-      </div>
-      <div class="telemetry_grid_element" id="first_row_fourth_position">
-        <div class="telemetry_grid_element_data_container">
-          <div class="telemetry_data_title">
-            <span class="telemetry_data_title_text">Pit</span>
-          </div>
-          <div class="telemetry_data_data">
-            <span class="telemetry_data_data_text" id="pit_status">N/A</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="telemetry_grid_element" id="second_row_first_position">
-        <div class="telemetry_grid_element_data_container">
-          <div class="telemetry_data_title">
-            <span class="telemetry_data_title_text">Sector</span>
-          </div>
-          <div class="telemetry_data_data">
-            <span class="telemetry_data_data_text" id="current_sector">N/A</span>
-          </div>
-        </div>
-      </div>
-      <div class="telemetry_grid_element" id="second_row_second_position">
-        <div class="telemetry_grid_element_data_container">
-          <div class="telemetry_data_title">
-            <span class="telemetry_data_title_text">DRS</span>
-          </div>
-          <div class="telemetry_data_data">
-            <span class="telemetry_data_data_text" id="drs_status">N/A</span>
-          </div>
-        </div>
-      </div>
-      <div class="telemetry_grid_element" id="second_row_third_position">
-        <div class="telemetry_grid_element_data_container">
-          <div class="telemetry_data_title">
-            <span class="telemetry_data_title_text">Gear</span>
-          </div>
-          <div class="telemetry_data_data">
-            <span class="telemetry_data_data_text" id="current_gear">N/A</span>
-          </div>
-        </div>
-      </div>
-      <div class="telemetry_grid_element" id="second_row_fourth_position">
-        <div class="telemetry_grid_element_data_container">
-          <div class="telemetry_data_title">
-            <span class="telemetry_data_title_text">FIA Flags</span>
-          </div>
-          <div class="telemetry_data_data">
-            <span class="telemetry_data_data_text" id="current_fia_flags">N/A</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="live_page_element" id="speed_graph">
-
-      <div class="graph_title">
-        <div class="graph_title_left">
-          <span class="graph_title_text">Race Speed (KM/H)</span>
-        </div>
-        <div class- "graph_title_right">
-          <span class="graph_title_control"></span>
-        </div>
-      </div>
-
-      <div id="speed_graph_container">
-        <canvas id="speed_chart_canvas"></canvas>
-      </div>
-
-    </div>
-    <div class="live_page_element" id="engine_rpm_graph">
-
-      <div class="graph_title">
-        <div class="graph_title_left">
-          <span class="graph_title_text">Engine Revs (RPM)</span>
-        </div>
-        <div class- "graph_title_right">
-          <span class="graph_title_control"></span>
-        </div>
-      </div>
-
-      <div id="rpm_graph_container">
-        <canvas id="rpm_chart_canvas"></canvas>
-      </div>
-
-    </div>
-    <div class="live_page_element" id="gear_graph">
-
-      <div class="graph_title">
-        <div class="graph_title_left">
-          <span class="graph_title_text">Gear Changes</span>
-        </div>
-        <div class- "graph_title_right">
-          <span class="graph_title_control"></span>
-        </div>
-      </div>
-
-      <div id="gear_graph_container">
-        <canvas id="gear_chart_canvas"></canvas>
-      </div>
-
-    </div>
-    <div class="live_page_element" id="throttle_brake_graph">
-
-      <div class="graph_title">
-        <div class="graph_title_left">
-          <span class="graph_title_text">Throttle/Brake Applications</span>
-        </div>
-        <div class- "graph_title_right">
-          <span class="graph_title_control"></span>
-        </div>
-      </div>
-
-      <div id="throttle_brake_graph_container">
-        <canvas id="throttle_brake_chart_canvas"></canvas>
-      </div>
-
     </div>
   </div>
 
 
 </body>
-<script src="/static/js/live_dashboard.js"></script>
+<script src="/static/js/history_dashboard.js"></script>
 
 </html>
