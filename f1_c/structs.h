@@ -3,10 +3,6 @@
 //
 // Author: Kristian Nilssen
 //
-
-// #include <stdint.h>
-// #include <inttypes.h>
-
 struct PacketHeader {
     uint16_t    m_packetFormat;         // 2018
     uint8_t     m_packetVersion;        // Version of this packet type, all start from 1
